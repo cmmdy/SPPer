@@ -1,8 +1,9 @@
 package com.drop.spper.mvp.ui.activity;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -11,12 +12,17 @@ import com.drop.spper.di.component.DaggerMainComponent;
 import com.drop.spper.di.moudle.MainMoudle;
 import com.drop.spper.mvp.contract.MainContract;
 import com.drop.spper.mvp.presenter.MainPresenter;
+import com.drop.spper.mvp.ui.fragment.Hot;
+import com.drop.spper.mvp.ui.fragment.MyActivity;
+import com.drop.spper.mvp.ui.fragment.MyLike;
+import com.drop.spper.mvp.ui.fragment.MyWork;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
 
@@ -24,6 +30,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     BottomNavigationBar mBottomNavigationBar;
 
     private RxPermissions mRxPermissions;
+    private ArrayList<Fragment> fragments = new ArrayList<>();
+    private Fragment currentFragment;
 
 
     @Override
@@ -45,23 +53,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     public void initData() {
 
         assignViews();
-
-        mBottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(int position) {
-
-            }
-
-            @Override
-            public void onTabUnselected(int position) {
-
-            }
-
-            @Override
-            public void onTabReselected(int position) {
-
-            }
-        });
     }
 
     @Override
@@ -102,9 +93,58 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 .setFirstSelectedPosition(2)
                 .initialise();
 
+        initFragments();
+        smartFragmentReplace(fragments.get(2));//设置默认选项
 
-//        fragments = getFragments();
-//        setDefaultFragment();//设置默认选项
+        mBottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(int position) {
+                smartFragmentReplace(fragments.get(position));
+            }
 
+            @Override
+            public void onTabUnselected(int position) {
+
+            }
+
+            @Override
+            public void onTabReselected(int position) {
+
+            }
+        });
+
+
+
+    }
+
+    private void initFragments(){
+        fragments.add(MyWork.getINSTANCE());
+        fragments.add(MyLike.getINSTANCE());
+        fragments.add(Hot.getINSTANCE());
+        fragments.add(MyActivity.getINSTANCE());
+        fragments.add(MyWork.getINSTANCE());
+    }
+
+    protected int getFragmentContentId() {
+        return R.id.root;
+    }
+
+    private void smartFragmentReplace(Fragment toFragment) {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        // 如有当前在使用的->隐藏当前的
+        if (currentFragment != null) {
+            transaction.hide(currentFragment);
+        }
+        String toClassName = toFragment.getClass().getSimpleName();
+        // toFragment之前添加使用过->显示出来
+        if (manager.findFragmentByTag(toClassName) != null) {
+            transaction.show(toFragment);
+        } else {// toFragment还没添加使用过->添加上去
+            transaction.add(getFragmentContentId(), toFragment, toClassName);
+        }
+        transaction.commit();
+        // toFragment更新为当前的
+        currentFragment = toFragment;
     }
 }

@@ -60,6 +60,8 @@ dependencies {
     //view
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     compile rootProject.ext.dependencies["paginate"]
+    compile rootProject.ext.dependencies["bottom-navigation-bar"]
+    compile rootProject.ext.dependencies["circleimageview"]
     //arms
     compile 'me.jessyan:arms:1.6.0'
     //test
@@ -68,5 +70,5 @@ dependencies {
     releaseCompile rootProject.ext.dependencies["canary-release"]
     testCompile rootProject.ext.dependencies["canary-release"]
     //ui
-    compile rootProject.ext.dependencies["bottom-navigation-bar"]
+
 }

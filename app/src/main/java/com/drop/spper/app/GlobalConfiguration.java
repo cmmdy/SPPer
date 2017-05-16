@@ -19,6 +19,7 @@ import com.drop.spper.BuildConfig;
 import com.drop.spper.R;
 import com.drop.spper.mvp.model.api.cache.CommonCache;
 import com.drop.spper.mvp.model.api.service.CommonService;
+import com.drop.spper.mvp.model.api.service.DouBanService;
 import com.jess.arms.base.App;
 import com.jess.arms.base.delegate.AppDelegate;
 import com.jess.arms.di.module.GlobalConfigModule;
@@ -48,7 +49,7 @@ public class GlobalConfiguration implements ConfigModule {
 
     @Override
     public void registerComponents(Context context, IRepositoryManager repositoryManager) {
-        repositoryManager.injectRetrofitService(CommonService.class);
+        repositoryManager.injectRetrofitService(CommonService.class, DouBanService.class);
         repositoryManager.injectCacheService(CommonCache.class);
     }
 
