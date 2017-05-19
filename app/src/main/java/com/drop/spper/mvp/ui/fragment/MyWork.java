@@ -21,6 +21,8 @@ import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.widget.imageloader.ImageLoader;
 import com.jess.arms.widget.imageloader.glide.GlideImageConfig;
 
+import java.io.Serializable;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -32,12 +34,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyWork extends BaseFragment<MyWorkPresenter> implements MyWorkContract.View {
 
-    @BindView(R.id.toolbar_back_tv)
-    TextView toolbarBackTv;
-    @BindView(R.id.toolbar_back)
-    LinearLayout toolbarBack;
-    @BindView(R.id.toolbar_title)
-    TextView toolbarTitle;
     @BindView(R.id.head)
     CircleImageView head;
     @BindView(R.id.name)
@@ -46,10 +42,9 @@ public class MyWork extends BaseFragment<MyWorkPresenter> implements MyWorkContr
     TextView mywork;
     @BindView(R.id.edit)
     TextView edit;
-    @BindView(R.id.my)
-    TextView my;
     private AppComponent mAppComponent;
     private ImageLoader mImageLoader;
+
 
 
     private static MyWork instance;
@@ -80,8 +75,6 @@ public class MyWork extends BaseFragment<MyWorkPresenter> implements MyWorkContr
     @Override
     public void initData() {
         Glide.with(getActivity()).load(R.drawable.head).into(head);
-        toolbarBack.setVisibility(View.GONE);
-        toolbarTitle.setText("我的作品");
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,19 +18,33 @@ import android.widget.TextView;
 
 import com.drop.spper.BuildConfig;
 import com.drop.spper.R;
+import com.drop.spper.mvp.model.api.Api;
 import com.drop.spper.mvp.model.api.cache.CommonCache;
 import com.drop.spper.mvp.model.api.service.CommonService;
 import com.drop.spper.mvp.model.api.service.DouBanService;
+import com.drop.spper.mvp.ui.activity.MainActivity;
+import com.drop.spper.mvp.ui.activity.PersonCenter;
 import com.jess.arms.base.App;
 import com.jess.arms.base.delegate.AppDelegate;
 import com.jess.arms.di.module.GlobalConfigModule;
+import com.jess.arms.http.GlobalHttpHandler;
+import com.jess.arms.http.RequestInterceptor;
 import com.jess.arms.integration.ConfigModule;
 import com.jess.arms.integration.IRepositoryManager;
+import com.jess.arms.utils.UiUtils;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
-import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Interceptor;
+import okhttp3.Request;
+import okhttp3.Response;
 import timber.log.Timber;
 
 /**
@@ -90,18 +105,18 @@ public class GlobalConfiguration implements ConfigModule {
                     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                     window.setStatusBarColor(Color.TRANSPARENT);
                 }
-                //这里全局给Activity设置toolbar和title,你想象力有多丰富,这里就有多强大,以前放到BaseActivity的操作都可以放到这里
-//                if (activity.findViewById(R.id.mytoolbar) != null) {
-//                    if (activity instanceof AppCompatActivity) {
-//                        ((AppCompatActivity) activity).setSupportActionBar((Toolbar) activity.findViewById(R.id.toolbar));
-//                        ((AppCompatActivity) activity).getSupportActionBar().setDisplayShowTitleEnabled(false);
-//                    } else {
-//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                            activity.setActionBar((android.widget.Toolbar) activity.findViewById(R.id.toolbar));
-//                            activity.getActionBar().setDisplayShowTitleEnabled(false);
-//                        }
-//                    }
-//                }
+//                这里全局给Activity设置toolbar和title,你想象力有多丰富,这里就有多强大,以前放到BaseActivity的操作都可以放到这里
+                if (activity.findViewById(R.id.mytoolbar) != null) {
+                    if (activity instanceof AppCompatActivity) {
+                        ((AppCompatActivity) activity).setSupportActionBar((Toolbar) activity.findViewById(R.id.mytoolbar));
+                        ((AppCompatActivity) activity).getSupportActionBar().setDisplayShowTitleEnabled(false);
+                    } else {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            activity.setActionBar((android.widget.Toolbar) activity.findViewById(R.id.mytoolbar));
+                            activity.getActionBar().setDisplayShowTitleEnabled(false);
+                        }
+                    }
+                }
                 if (activity.findViewById(R.id.toolbar_title) != null) {
                     ((TextView) activity.findViewById(R.id.toolbar_title)).setText(activity.getTitle());
                 }
@@ -146,9 +161,13 @@ public class GlobalConfiguration implements ConfigModule {
     }
 
     @Override
-    public void injectFragmentLifecycle(Context
-                                                context, List<FragmentManager.FragmentLifecycleCallbacks> lifecycles) {
+    public void injectFragmentLifecycle(Context context, List<FragmentManager.FragmentLifecycleCallbacks> lifecycles) {
         lifecycles.add(new FragmentManager.FragmentLifecycleCallbacks() {
+            @Override
+            public void onFragmentStopped(FragmentManager fm, Fragment f) {
+                super.onFragmentStopped(fm, f);
+            }
+
             @Override
             public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
                 ((RefWatcher) ((App) f.getActivity().getApplication()).getAppComponent().extras().get(RefWatcher.class.getName())).watch(this);

@@ -6,15 +6,17 @@ import android.widget.TextView;
 
 import com.drop.spper.R;
 import com.drop.spper.mvp.model.entity.HotMovieBean;
-import com.jakewharton.rxbinding.widget.RxTextView;
+import com.drop.spper.mvp.ui.activity.PersonCenter;
+import com.drop.spper.mvp.ui.activity.testActivity;
 import com.jess.arms.base.App;
 import com.jess.arms.base.BaseHolder;
 import com.jess.arms.di.component.AppComponent;
+import com.jess.arms.utils.UiUtils;
 import com.jess.arms.widget.imageloader.ImageLoader;
 import com.jess.arms.widget.imageloader.glide.GlideImageConfig;
 
 import butterknife.BindView;
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Created by Drop on 2017/5/15.
@@ -42,9 +44,9 @@ public class HolderOne extends BaseHolder<HotMovieBean.SubjectsBean> {
     @Override
     public void setData(HotMovieBean.SubjectsBean data, int position) {
         Observable.just(data.getCasts().get(0).getName())
-                .subscribe(RxTextView.text(photographer));
+                .subscribe(s -> photographer.setText(s));
         Observable.just(data.getTitle())
-                .subscribe(RxTextView.text(tvName));
+                .subscribe(s -> tvName.setText(s));
         mImageLoader.loadImage(mAppComponent.appManager().getCurrentActivity() == null
                         ? mAppComponent.Application() : mAppComponent.appManager().getCurrentActivity(),
                 GlideImageConfig
@@ -67,4 +69,12 @@ public class HolderOne extends BaseHolder<HotMovieBean.SubjectsBean> {
                 .imageViews(ivAvatar)
                 .build());
     }
+
+    @Override
+    public void onClick(View view) {
+        super.onClick(view);
+        UiUtils.startActivity(mAppComponent.appManager().getCurrentActivity(), testActivity.class);
+
+    }
+
 }

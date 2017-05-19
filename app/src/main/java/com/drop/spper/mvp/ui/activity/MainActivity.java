@@ -1,9 +1,14 @@
 package com.drop.spper.mvp.ui.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -12,22 +17,34 @@ import com.drop.spper.di.component.DaggerMainComponent;
 import com.drop.spper.di.moudle.MainMoudle;
 import com.drop.spper.mvp.contract.MainContract;
 import com.drop.spper.mvp.presenter.MainPresenter;
+import com.drop.spper.mvp.ui.fragment.Appointment;
 import com.drop.spper.mvp.ui.fragment.Hot;
 import com.drop.spper.mvp.ui.fragment.MyActivity;
 import com.drop.spper.mvp.ui.fragment.MyLike;
 import com.drop.spper.mvp.ui.fragment.MyWork;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.jess.arms.utils.UiUtils;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
 
     @BindView(R.id.bottomNavigationBar)
     BottomNavigationBar mBottomNavigationBar;
+    @BindView(R.id.toolbar_back_tv)
+    TextView toolbarBackTv;
+    @BindView(R.id.toolbar_back)
+    LinearLayout toolbarBack;
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitle;
 
     private RxPermissions mRxPermissions;
     private ArrayList<Fragment> fragments = new ArrayList<>();
@@ -51,7 +68,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void initData() {
-
+        toolbarBack.setVisibility(View.GONE);
         assignViews();
     }
 
@@ -82,24 +99,24 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     private void assignViews() {
         mBottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED)
-                            .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC)
-                            .setBarBackgroundColor(R.color.transparent)
-                            .setBackground(getResources().getDrawable(R.drawable.backgroundbottom));
+                .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC)
+                .setBarBackgroundColor(R.color.transparent)
+                .setBackground(getResources().getDrawable(R.drawable.backgroundbottom));
         mBottomNavigationBar.addItem(new BottomNavigationItem(R.drawable.bottom1, "我的作品"))//我的作品
                 .addItem(new BottomNavigationItem(R.drawable.bottom2, "我的关注"))//我的关注
                 .addItem(new BottomNavigationItem(R.drawable.bottom3, "热门"))//热门
                 .addItem(new BottomNavigationItem(R.drawable.bottom4, "活动"))//活动
                 .addItem(new BottomNavigationItem(R.drawable.bottom5, "约拍"))//约拍
-                .setFirstSelectedPosition(2)
+                .setFirstSelectedPosition(0)
                 .initialise();
 
         initFragments();
-        smartFragmentReplace(fragments.get(2));//设置默认选项
+        smartFragmentReplace(fragments.get(0), 0);//设置默认选项
 
         mBottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position) {
-                smartFragmentReplace(fragments.get(position));
+                smartFragmentReplace(fragments.get(position), position);
             }
 
             @Override
@@ -114,22 +131,21 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         });
 
 
-
     }
 
-    private void initFragments(){
+    private void initFragments() {
         fragments.add(MyWork.getINSTANCE());
         fragments.add(MyLike.getINSTANCE());
         fragments.add(Hot.getINSTANCE());
         fragments.add(MyActivity.getINSTANCE());
-        fragments.add(MyWork.getINSTANCE());
+        fragments.add(Appointment.getINSTANCE());
     }
 
     protected int getFragmentContentId() {
         return R.id.root;
     }
 
-    private void smartFragmentReplace(Fragment toFragment) {
+    private void smartFragmentReplace(Fragment toFragment, int id) {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         // 如有当前在使用的->隐藏当前的
@@ -146,5 +162,30 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         transaction.commit();
         // toFragment更新为当前的
         currentFragment = toFragment;
+
+        //更改标题
+        switch (id) {
+            case 0:
+                toolbarTitle.setText("我的作品");
+                break;
+            case 1:
+                toolbarTitle.setText("我的关注");
+                break;
+            case 2:
+                toolbarTitle.setText("热门");
+                break;
+            case 3:
+                toolbarTitle.setText("活动");
+                break;
+            case 4:
+                toolbarTitle.setText("约拍");
+                break;
+        }
+    }
+
+
+    @OnClick(R.id.my)
+    public void onViewClicked() {
+        UiUtils.startActivity(this, PersonCenter.class);
     }
 }

@@ -16,11 +16,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Drop on 2017/5/15.
@@ -45,11 +45,14 @@ public class MyLikePresenter extends BasePresenter<MyLikeContract.Model, MyLikeC
         this.mErrorHandler = mErrorHandler;
         this.mAppManager = mAppManager;
         this.mApplication = mApplication;
-        mAdapter = new AdapterOne(subjectsBeens);
-        mRootView.setAdapter(mAdapter);
     }
 
     public void requestMyLike(boolean pullToRefresh){
+
+        if (mAdapter == null) {
+            mAdapter = new AdapterOne(subjectsBeens);
+            mRootView.setAdapter(mAdapter);
+        }
 
         boolean isEvictCache = pullToRefresh;//是否驱逐缓存,为ture即不使用缓存,每次上拉刷新即需要最新数据,则不使用缓存
 
@@ -65,12 +68,11 @@ public class MyLikePresenter extends BasePresenter<MyLikeContract.Model, MyLikeC
         mModel.getMyLike(lastStart, isEvictCache)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
-                .doOnSubscribe(() -> {
-                    if(pullToRefresh){
-                        mRootView.showLoading();//显示上拉刷新进度条
-                    } else {
-                        mRootView.startLoadMore();//显示下拉加载更多进度条
-                    }
+                .doOnSubscribe(disposable -> {
+                    if (pullToRefresh)
+                        mRootView.showLoading();//显示上拉刷新的进度条
+                    else
+                        mRootView.startLoadMore();//显示下拉加载更多的进度条
                 }).subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doAfterTerminate(() -> {

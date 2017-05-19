@@ -1,56 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.v7.widget.Toolbar
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="42dp"
     android:id="@+id/mytoolbar"
-    android:layout_width="match_parent"
-    android:layout_height="37dp"
-    >
+    android:layout_width="match_parent">
 
-    <LinearLayout
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="15dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/toolbar_back">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp">
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/back" />
-
-        <TextView
-            android:id="@+id/toolbar_back_tv"
+        <LinearLayout
+            android:id="@+id/toolbar_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/back" />
+
+            <TextView
+                android:id="@+id/toolbar_back_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:textColor="@color/white"
-            android:textSize="20sp"
-            />
-    </LinearLayout>
+            android:textSize="22sp" />
 
-    <TextView
-        android:id="@+id/toolbar_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        <TextView
+            android:id="@+id/my"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="14dp"
+            android:layout_marginTop="8dp"
+            android:text="个人中心"
+            android:textColor="@color/white"
+            android:textSize="19sp" />
 
-    <TextView
-        android:id="@+id/my"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="个人中心"
-        android:textSize="17sp"
-        android:textColor="@color/white"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="14dp" />
-
-    <LinearLayout
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/divisionLight"/>
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/divisionLight" />
+    </RelativeLayout>
+</android.support.v7.widget.Toolbar>

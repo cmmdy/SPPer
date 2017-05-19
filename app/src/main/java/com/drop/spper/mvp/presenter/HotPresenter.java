@@ -17,11 +17,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Drop on 2017/5/16.
@@ -46,11 +46,16 @@ public class HotPresenter extends BasePresenter<HotContract.Model, HotContract.V
         this.mErrorHandler = mErrorHandler;
         this.mAppManager = mAppManager;
         this.mApplication = mApplication;
-        mAdapter = new AdapterOne(subjectsBeens);
-        mRootView.setAdapter(mAdapter);
+
     }
 
-    public void requestHot(boolean pullToRefresh){
+    public void requestHot(boolean pullToRefresh) {
+        if (mAdapter == null) {
+            mAdapter = new AdapterOne(subjectsBeens);
+            mRootView.setAdapter(mAdapter);
+        }
+
+
         //请求外部存储权限
         PermissionUtil.externalStorage(() -> {
             //request permission success, do something.
@@ -63,7 +68,7 @@ public class HotPresenter extends BasePresenter<HotContract.Model, HotContract.V
             lastStart = 1;
         }
 
-        if(pullToRefresh && isFirst){//默认在第一次上拉刷新时使用缓存
+        if (pullToRefresh && isFirst) {//默认在第一次上拉刷新时使用缓存
             isFirst = false;
             isEvictCache = false;
         }
@@ -71,16 +76,15 @@ public class HotPresenter extends BasePresenter<HotContract.Model, HotContract.V
         mModel.getHot(lastStart, isEvictCache)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(3, 2))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
-                .doOnSubscribe(() -> {
-                    if(pullToRefresh){
-                        mRootView.showLoading();//显示上拉刷新进度条
-                    } else {
-                        mRootView.startLoadMore();//显示下拉加载更多进度条
-                    }
+                .doOnSubscribe(disposable -> {
+                    if (pullToRefresh)
+                        mRootView.showLoading();//显示上拉刷新的进度条
+                    else
+                        mRootView.startLoadMore();//显示下拉加载更多的进度条
                 }).subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doAfterTerminate(() -> {
-                    if(pullToRefresh){
+                    if (pullToRefresh) {
                         mRootView.hideLoading();//隐藏上拉刷新进度条
                     } else {
                         mRootView.endLoadMore();//隐藏下拉加载更多进度条
@@ -90,13 +94,13 @@ public class HotPresenter extends BasePresenter<HotContract.Model, HotContract.V
                 .subscribe(new ErrorHandleSubscriber<HotMovieBean>(mErrorHandler) {
                     @Override
                     public void onNext(HotMovieBean hotMovieBean) {
-                        if(pullToRefresh){
+                        if (pullToRefresh) {
                             subjectsBeens.clear();
                         }
                         preEndIndex = subjectsBeens.size() + 1;
                         subjectsBeens.addAll(hotMovieBean.getSubjects());
                         lastStart = subjectsBeens.size() + 1;
-                        if(pullToRefresh){
+                        if (pullToRefresh) {
                             mAdapter.notifyDataSetChanged();
                         } else {
                             mAdapter.notifyItemRangeInserted(preEndIndex, hotMovieBean.getSubjects().size());

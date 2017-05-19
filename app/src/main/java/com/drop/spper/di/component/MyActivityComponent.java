@@ -1,4 +1,4 @@
-package com.drop.spper.mvp.contract;
+package com.drop.spper.di.component;
 
 import com.drop.spper.di.moudle.MyActivityMoudle;
 import com.drop.spper.mvp.ui.fragment.MyActivity;

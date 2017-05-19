@@ -4,9 +4,9 @@ import com.drop.spper.mvp.model.entity.HotMovieBean;
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.mvp.IModel;
 import com.jess.arms.mvp.IView;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Created by Drop on 2017/5/16.

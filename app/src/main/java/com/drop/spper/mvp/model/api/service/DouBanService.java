@@ -3,8 +3,8 @@ package com.drop.spper.mvp.model.api.service;
 
 import com.drop.spper.mvp.model.entity.HotMovieBean;
 
+import io.reactivex.Observable;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -18,7 +18,7 @@ public interface DouBanService {
      * 豆瓣热映电影
      */
     @GET("v2/movie/in_theaters")
-    rx.Observable<HotMovieBean> getHotMovie();
+    Observable<HotMovieBean> getHotMovie();
 
 //    @GET("v2/movie/subject/{id}")
 //    rx.Observable<MovieDetailBean> getMovieDetail(@Path("id") String id);
@@ -29,5 +29,5 @@ public interface DouBanService {
      * @param count 一次请求的数目，如10条，最多100
      */
     @GET("https://api.douban.com/v2/movie/top250")
-    rx.Observable<HotMovieBean> getMovieTop250(@Query("start") int start, @Query("count") int count);
+    Observable<HotMovieBean> getMovieTop250(@Query("start") int start, @Query("count") int count);
 }

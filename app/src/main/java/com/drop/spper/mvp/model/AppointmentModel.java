@@ -9,7 +9,8 @@ import com.jess.arms.mvp.BaseModel;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 /**
  * Created by Drop on 2017/5/16.

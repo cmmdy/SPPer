@@ -13,8 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.drop.spper.R;
+import com.drop.spper.di.component.DaggerMyActivityComponent;
 import com.drop.spper.di.moudle.MyActivityMoudle;
-import com.drop.spper.mvp.contract.DaggerMyActivityComponent;
 import com.drop.spper.mvp.contract.MyActivityContract;
 import com.drop.spper.mvp.presenter.MyActivityPresenter;
 import com.jess.arms.base.BaseFragment;
@@ -23,28 +23,23 @@ import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.UiUtils;
 import com.jess.arms.widget.imageloader.ImageLoader;
 import com.paginate.Paginate;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import java.io.Serializable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by Drop on 2017/5/7.
  */
 
-public class MyActivity extends BaseFragment<MyActivityPresenter> implements MyActivityContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class MyActivity extends BaseFragment<MyActivityPresenter> implements MyActivityContract.View, SwipeRefreshLayout.OnRefreshListener{
 
-    @BindView(R.id.toolbar_back_tv)
-    TextView toolbarBackTv;
-    @BindView(R.id.toolbar_back)
-    LinearLayout toolbarBack;
-    @BindView(R.id.toolbar_title)
-    TextView toolbarTitle;
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
     @BindView(R.id.swipyRl)
@@ -57,6 +52,7 @@ public class MyActivity extends BaseFragment<MyActivityPresenter> implements MyA
     private RxPermissions mRxPermissions;
 
     private static MyActivity instance;
+
 
     public static synchronized MyActivity getINSTANCE() {
         if (instance == null) {
@@ -111,8 +107,6 @@ public class MyActivity extends BaseFragment<MyActivityPresenter> implements MyA
     @Override
     public void initData() {
         mPresenter.requestMyLike(true);
-        toolbarBack.setVisibility(View.GONE);
-        toolbarTitle.setText("我的关注");
     }
 
     @Override
@@ -124,12 +118,7 @@ public class MyActivity extends BaseFragment<MyActivityPresenter> implements MyA
     public void showLoading() {
         Observable.just(1)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Integer>() {
-                    @Override
-                    public void call(Integer integer) {
-                        swipeRefreshLayout.setRefreshing(true);
-                    }
-                });
+                .subscribe(integer -> swipeRefreshLayout.setRefreshing(true));
     }
 
     @Override
@@ -153,9 +142,6 @@ public class MyActivity extends BaseFragment<MyActivityPresenter> implements MyA
     }
 
 
-    @OnClick(R.id.my)
-    public void onViewClicked() {
-    }
 
     private void initPaginate() {
         if (mPaginate == null) {

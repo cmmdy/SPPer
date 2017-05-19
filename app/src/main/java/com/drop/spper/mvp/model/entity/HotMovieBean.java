@@ -1,12 +1,13 @@
 package com.drop.spper.mvp.model.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by 夏夜晚凤 on 2017/4/27.
  */
 
-public class HotMovieBean {
+public class HotMovieBean implements Serializable {
 
     /**
      * count : 20
@@ -62,7 +63,7 @@ public class HotMovieBean {
         this.subjects = subjects;
     }
 
-    public static class SubjectsBean {
+    public static class SubjectsBean implements Serializable {
         /**
          * rating : {"max":10,"average":7.2,"stars":"40","min":0}
          * genres : ["动作","犯罪"]
@@ -187,7 +188,7 @@ public class HotMovieBean {
             this.directors = directors;
         }
 
-        public static class RatingBean {
+        public static class RatingBean implements Serializable {
             /**
              * max : 10
              * average : 7.2
@@ -233,7 +234,7 @@ public class HotMovieBean {
             }
         }
 
-        public static class ImagesBean {
+        public static class ImagesBean implements Serializable{
             /**
              * small : http://img7.doubanio.com/view/movie_poster_cover/ipst/public/p2444256500.jpg
              * large : http://img7.doubanio.com/view/movie_poster_cover/lpst/public/p2444256500.jpg
@@ -269,7 +270,7 @@ public class HotMovieBean {
             }
         }
 
-        public static class CastsBean {
+        public static class CastsBean implements Serializable{
             /**
              * alt : https://movie.douban.com/celebrity/1041020/
              * avatars : {"small":"http://img3.doubanio.com/img/celebrity/small/53186.jpg","large":"http://img3.doubanio.com/img/celebrity/large/53186.jpg","medium":"http://img3.doubanio.com/img/celebrity/medium/53186.jpg"}
@@ -351,7 +352,7 @@ public class HotMovieBean {
             }
         }
 
-        public static class DirectorsBean {
+        public static class DirectorsBean implements Serializable{
             /**
              * alt : https://movie.douban.com/celebrity/1009396/
              * avatars : {"small":"http://img7.doubanio.com/img/celebrity/small/4451.jpg","large":"http://img7.doubanio.com/img/celebrity/large/4451.jpg","medium":"http://img7.doubanio.com/img/celebrity/medium/4451.jpg"}
@@ -396,7 +397,7 @@ public class HotMovieBean {
                 this.id = id;
             }
 
-            public static class AvatarsBeanX {
+            public static class AvatarsBeanX implements Serializable{
                 /**
                  * small : http://img7.doubanio.com/img/celebrity/small/4451.jpg
                  * large : http://img7.doubanio.com/img/celebrity/large/4451.jpg

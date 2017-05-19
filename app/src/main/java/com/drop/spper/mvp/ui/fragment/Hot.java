@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.drop.spper.R;
@@ -22,15 +21,16 @@ import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.UiUtils;
 import com.jess.arms.widget.imageloader.ImageLoader;
 import com.paginate.Paginate;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import java.io.Serializable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import timber.log.Timber;
 
 /**
@@ -39,10 +39,6 @@ import timber.log.Timber;
 
 public class Hot extends BaseFragment<HotPresenter> implements HotContract.View, SwipeRefreshLayout.OnRefreshListener {
 
-    @BindView(R.id.toolbar_back)
-    LinearLayout toolbarBack;
-    @BindView(R.id.toolbar_title)
-    TextView toolbarTitle;
     @BindView(R.id.work)
     TextView work;
     @BindView(R.id.photographer)
@@ -61,6 +57,7 @@ public class Hot extends BaseFragment<HotPresenter> implements HotContract.View,
     private RxPermissions mRxPermissions;
 
     private static Hot instance;
+
 
     public static synchronized Hot getINSTANCE() {
         if (instance == null) {
@@ -93,8 +90,6 @@ public class Hot extends BaseFragment<HotPresenter> implements HotContract.View,
     @Override
     public void initData() {
         mPresenter.requestHot(true);
-        toolbarBack.setVisibility(View.GONE);
-        toolbarTitle.setText("我的关注");
         work.setTextColor(getResources().getColor(R.color.textclick));
     }
 
@@ -105,6 +100,7 @@ public class Hot extends BaseFragment<HotPresenter> implements HotContract.View,
 
     @Override
     public void setAdapter(DefaultAdapter mAdapter) {
+        Timber.tag("rev").e(recyclerview.toString());
         recyclerview.setAdapter(mAdapter);
         initRecycleView();
         initPaginate();
@@ -129,12 +125,7 @@ public class Hot extends BaseFragment<HotPresenter> implements HotContract.View,
     public void showLoading() {
         Observable.just(1)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Integer>() {
-                    @Override
-                    public void call(Integer integer) {
-                        swipeRefreshLayout.setRefreshing(true);
-                    }
-                });
+                .subscribe(integer -> swipeRefreshLayout.setRefreshing(true));
     }
 
     @Override
@@ -195,11 +186,9 @@ public class Hot extends BaseFragment<HotPresenter> implements HotContract.View,
         textView.setTextColor(getResources().getColor(R.color.textclick));
     }
 
-    @OnClick({R.id.my, R.id.work, R.id.photographer, R.id.model})
+    @OnClick({R.id.work, R.id.photographer, R.id.model})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.my:
-                break;
             case R.id.work:
                 changeTextColor(work);
                 mPresenter.requestHot(true);
@@ -214,4 +203,5 @@ public class Hot extends BaseFragment<HotPresenter> implements HotContract.View,
                 break;
         }
     }
+
 }

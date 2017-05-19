@@ -24,28 +24,24 @@ import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.UiUtils;
 import com.jess.arms.widget.imageloader.ImageLoader;
 import com.paginate.Paginate;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by Drop on 2017/5/7.
  */
 
-public class MyLike extends BaseFragment<MyLikePresenter> implements MyLikeContract.View ,SwipeRefreshLayout.OnRefreshListener{
+public class MyLike extends BaseFragment<MyLikePresenter> implements MyLikeContract.View ,SwipeRefreshLayout.OnRefreshListener {
 
-    @BindView(R.id.toolbar_back)
-    LinearLayout toolbarBack;
-    @BindView(R.id.toolbar_title)
-    TextView toolbarTitle;
     @BindView(R.id.work)
     TextView work;
     @BindView(R.id.photographer)
@@ -91,8 +87,6 @@ public class MyLike extends BaseFragment<MyLikePresenter> implements MyLikeContr
     @Override
     public void initData() {
         mPresenter.requestMyLike(true);
-        toolbarBack.setVisibility(View.GONE);
-        toolbarTitle.setText("我的关注");
         work.setTextColor(getResources().getColor(R.color.textclick));
     }
 
@@ -104,12 +98,7 @@ public class MyLike extends BaseFragment<MyLikePresenter> implements MyLikeContr
     public void showLoading() {
         Observable.just(1)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Integer>() {
-                    @Override
-                    public void call(Integer integer) {
-                        swipeRefreshLayout.setRefreshing(true);
-                    }
-                });
+                .subscribe(integer -> swipeRefreshLayout.setRefreshing(true));
     }
 
     @Override
@@ -140,11 +129,9 @@ public class MyLike extends BaseFragment<MyLikePresenter> implements MyLikeContr
         textView.setTextColor(getResources().getColor(R.color.textclick));
     }
 
-    @OnClick({R.id.my, R.id.work, R.id.photographer, R.id.model})
+    @OnClick({R.id.work, R.id.photographer, R.id.model})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.my:
-                break;
             case R.id.work:
                 changeTextColor(work);
                 mPresenter.requestMyLike(true);
