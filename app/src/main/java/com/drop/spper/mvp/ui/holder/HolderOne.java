@@ -6,8 +6,6 @@ import android.widget.TextView;
 
 import com.drop.spper.R;
 import com.drop.spper.mvp.model.entity.HotMovieBean;
-import com.drop.spper.mvp.ui.activity.PersonCenter;
-import com.drop.spper.mvp.ui.activity.testActivity;
 import com.jess.arms.base.App;
 import com.jess.arms.base.BaseHolder;
 import com.jess.arms.di.component.AppComponent;
@@ -48,14 +46,14 @@ public class HolderOne extends BaseHolder<HotMovieBean.SubjectsBean> {
         Observable.just(data.getTitle())
                 .subscribe(s -> tvName.setText(s));
         mImageLoader.loadImage(mAppComponent.appManager().getCurrentActivity() == null
-                        ? mAppComponent.Application() : mAppComponent.appManager().getCurrentActivity(),
+                        ? mAppComponent.application() : mAppComponent.appManager().getCurrentActivity(),
                 GlideImageConfig
                         .builder()
                         .url(data.getImages().getLarge())
                         .imageView(ivAvatar)
                         .build());
         mImageLoader.loadImage(mAppComponent.appManager().getCurrentActivity() == null
-                        ? mAppComponent.Application() : mAppComponent.appManager().getCurrentActivity(),
+                        ? mAppComponent.application() : mAppComponent.appManager().getCurrentActivity(),
                 GlideImageConfig
                         .builder()
                         .url(data.getCasts().get(0).getAvatars().getMedium())
@@ -65,7 +63,7 @@ public class HolderOne extends BaseHolder<HotMovieBean.SubjectsBean> {
 
     @Override
     protected void onRelease() {
-        mImageLoader.clear(mAppComponent.Application(), GlideImageConfig.builder()
+        mImageLoader.clear(mAppComponent.application(), GlideImageConfig.builder()
                 .imageViews(ivAvatar)
                 .build());
     }
@@ -73,8 +71,6 @@ public class HolderOne extends BaseHolder<HotMovieBean.SubjectsBean> {
     @Override
     public void onClick(View view) {
         super.onClick(view);
-        UiUtils.startActivity(mAppComponent.appManager().getCurrentActivity(), testActivity.class);
-
     }
 
 }

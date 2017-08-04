@@ -100,12 +100,12 @@ public class MyActivity extends BaseFragment<MyActivityPresenter> implements MyA
     }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup container) {
+    public View initView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_myactivity, container, false);
     }
 
     @Override
-    public void initData() {
+    public void initData(Bundle savedInstanceState) {
         mPresenter.requestMyLike(true);
     }
 
@@ -128,7 +128,7 @@ public class MyActivity extends BaseFragment<MyActivityPresenter> implements MyA
 
     @Override
     public void showMessage(String message) {
-        UiUtils.SnackbarText(message);
+        UiUtils.snackbarText(message);
     }
 
     @Override

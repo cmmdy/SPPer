@@ -80,12 +80,12 @@ public class MyLike extends BaseFragment<MyLikePresenter> implements MyLikeContr
     }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup container) {
+    public View initView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_mylike, container, false);
     }
 
     @Override
-    public void initData() {
+    public void initData(Bundle savedInstanceState) {
         mPresenter.requestMyLike(true);
         work.setTextColor(getResources().getColor(R.color.textclick));
     }
@@ -108,7 +108,7 @@ public class MyLike extends BaseFragment<MyLikePresenter> implements MyLikeContr
 
     @Override
     public void showMessage(String message) {
-        UiUtils.SnackbarText(message);
+        UiUtils.snackbarText(message);
     }
 
     @Override

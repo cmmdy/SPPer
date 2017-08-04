@@ -1,6 +1,7 @@
 package com.drop.spper.mvp.ui.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -100,12 +101,12 @@ public class Appointment extends BaseFragment<AppointmentPresenter> implements A
     }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup container) {
+    public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_appointment, container, false);
     }
 
     @Override
-    public void initData() {
+    public void initData(Bundle savedInstanceState) {
         mPresenter.requestAppointment(true);
         work.setTextColor(getResources().getColor(R.color.textclick));
     }
@@ -129,7 +130,7 @@ public class Appointment extends BaseFragment<AppointmentPresenter> implements A
 
     @Override
     public void showMessage(String message) {
-        UiUtils.SnackbarText(message);
+        UiUtils.snackbarText(message);
     }
 
     @Override

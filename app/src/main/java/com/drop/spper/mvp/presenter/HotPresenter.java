@@ -11,6 +11,7 @@ import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
 import com.jess.arms.utils.PermissionUtil;
+import com.jess.arms.utils.UiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
  */
 
 @FragmentScope
-public class HotPresenter extends BasePresenter<HotContract.Model, HotContract.View> {
+public class HotPresenter extends BasePresenter<HotContract.Model, HotContract.View> implements PermissionUtil.RequestPermission{
 
     private RxErrorHandler mErrorHandler;
     private AppManager mAppManager;
@@ -52,14 +53,12 @@ public class HotPresenter extends BasePresenter<HotContract.Model, HotContract.V
     public void requestHot(boolean pullToRefresh) {
         if (mAdapter == null) {
             mAdapter = new AdapterOne(subjectsBeens);
-            mRootView.setAdapter(mAdapter);
+            mRootView. setAdapter(mAdapter);
         }
 
 
         //请求外部存储权限
-        PermissionUtil.externalStorage(() -> {
-            //request permission success, do something.
-        }, mRootView.getRxPermissions(), mRootView, mErrorHandler);
+        PermissionUtil.externalStorage(this ,mRootView.getRxPermissions(), mErrorHandler);
 
 
         boolean isEvictCache = pullToRefresh;//是否驱逐缓存,为ture即不使用缓存,每次上拉刷新即需要最新数据,则不使用缓存
@@ -107,5 +106,15 @@ public class HotPresenter extends BasePresenter<HotContract.Model, HotContract.V
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onRequestPermissionSuccess() {
+
+    }
+
+    @Override
+    public void onRequestPermissionFailure() {
+        UiUtils.snackbarText("权限申请失败");
     }
 }

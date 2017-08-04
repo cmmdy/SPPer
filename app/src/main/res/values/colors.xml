@@ -9,4 +9,6 @@
     <color name="divisionDark">#47ffffff</color>
     <color name="divisionLight">#5effffff</color>
     <color name="textclick">#38dbff</color>
+    <color name="color_text_selected">#ffffff</color>
+    <color name="color_text_normal">#000000</color>
 </resources>

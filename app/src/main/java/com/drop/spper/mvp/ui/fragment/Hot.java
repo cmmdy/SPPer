@@ -83,12 +83,12 @@ public class Hot extends BaseFragment<HotPresenter> implements HotContract.View,
     }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup container) {
+    public View initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_hot, container, false);
     }
 
     @Override
-    public void initData() {
+    public void initData(Bundle savedInstanceState) {
         mPresenter.requestHot(true);
         work.setTextColor(getResources().getColor(R.color.textclick));
     }
@@ -100,7 +100,6 @@ public class Hot extends BaseFragment<HotPresenter> implements HotContract.View,
 
     @Override
     public void setAdapter(DefaultAdapter mAdapter) {
-        Timber.tag("rev").e(recyclerview.toString());
         recyclerview.setAdapter(mAdapter);
         initRecycleView();
         initPaginate();
@@ -135,7 +134,7 @@ public class Hot extends BaseFragment<HotPresenter> implements HotContract.View,
 
     @Override
     public void showMessage(String message) {
-        UiUtils.SnackbarText(message);
+        UiUtils.snackbarText(message);
     }
 
     @Override

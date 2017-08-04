@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="arms-2.1.5">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.android/build-cache/be44f0ea6b8a2e5196c024826487384b060037e5/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/be44f0ea6b8a2e5196c024826487384b060037e5/output/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/me.jessyan/arms/2.1.5/593e5389bb8cf08ced2267b8c5b93c01bfcdcdeb/arms-2.1.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

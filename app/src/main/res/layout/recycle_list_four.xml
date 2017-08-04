@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2016年5月20日"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_alignEnd="@+id/money_number" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="2016年5月20日"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_marginEnd="20dp"
+        android:id="@+id/money_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5.00"
+        android:textColor="@color/white"
+        android:textSize="26sp"
+        android:layout_above="@+id/linearLayout5"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:id="@+id/in_out"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/money_number" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divisionLight"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/linearLayout5" />
+
+</RelativeLayout>

@@ -68,12 +68,12 @@ public class MyWork extends BaseFragment<MyWorkPresenter> implements MyWorkContr
     }
 
     @Override
-    public View initView(LayoutInflater inflater, ViewGroup container) {
+    public View initView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_mywork, container, false);
     }
 
     @Override
-    public void initData() {
+    public void initData(Bundle savedInstanceState) {
         Glide.with(getActivity()).load(R.drawable.head).into(head);
     }
 

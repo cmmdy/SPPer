@@ -1,12 +1,8 @@
 package com.drop.spper.di.moudle;
 
-import com.drop.spper.mvp.contract.MyWorkContract;
 import com.drop.spper.mvp.contract.PersonCenterContract;
-import com.drop.spper.mvp.model.MyWorkModel;
 import com.drop.spper.mvp.model.PersonCenterModel;
-import com.drop.spper.mvp.ui.activity.PersonCenter;
 import com.jess.arms.di.scope.ActivityScope;
-import com.jess.arms.di.scope.FragmentScope;
 
 import dagger.Module;
 import dagger.Provides;

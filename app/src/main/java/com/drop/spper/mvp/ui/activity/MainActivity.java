@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
@@ -29,18 +28,13 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
 
     @BindView(R.id.bottomNavigationBar)
     BottomNavigationBar mBottomNavigationBar;
-    @BindView(R.id.toolbar_back_tv)
-    TextView toolbarBackTv;
     @BindView(R.id.toolbar_back)
     LinearLayout toolbarBack;
     @BindView(R.id.toolbar_title)
@@ -62,12 +56,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
     @Override
-    public int initView() {
+    public int initView(Bundle savedInstanceState) {
         return R.layout.activity_main;
     }
 
     @Override
-    public void initData() {
+    public void initData(Bundle savedInstanceState) {
         toolbarBack.setVisibility(View.GONE);
         assignViews();
     }
@@ -94,7 +88,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void killMyself() {
-
+        UiUtils.exitApp();
     }
 
     private void assignViews() {
@@ -181,11 +175,5 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 toolbarTitle.setText("约拍");
                 break;
         }
-    }
-
-
-    @OnClick(R.id.my)
-    public void onViewClicked() {
-        UiUtils.startActivity(this, PersonCenter.class);
     }
 }

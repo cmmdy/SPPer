@@ -41,7 +41,7 @@ public class HolderTwo extends BaseHolder<HotMovieBean.SubjectsBean> {
     @Override
     public void setData(HotMovieBean.SubjectsBean data, int position) {
         mImageLoader.loadImage(mAppComponent.appManager().getCurrentActivity() == null
-                        ? mAppComponent.Application() : mAppComponent.appManager().getCurrentActivity(),
+                        ? mAppComponent.application() : mAppComponent.appManager().getCurrentActivity(),
                 GlideImageConfig
                         .builder()
                         .url(data.getCasts().get(0).getAvatars().getLarge())
@@ -55,7 +55,7 @@ public class HolderTwo extends BaseHolder<HotMovieBean.SubjectsBean> {
 
     @Override
     protected void onRelease() {
-        mImageLoader.clear(mAppComponent.Application(), GlideImageConfig.builder()
+        mImageLoader.clear(mAppComponent.application(), GlideImageConfig.builder()
                 .imageViews(iv)
                 .build());
     }

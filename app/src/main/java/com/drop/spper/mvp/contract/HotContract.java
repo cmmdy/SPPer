@@ -14,15 +14,18 @@ import io.reactivex.Observable;
  */
 
 public interface HotContract {
-    interface View extends IView{
+    interface View extends IView {
         void setAdapter(DefaultAdapter mAdapter);
+
         void startLoadMore();
+
         void endLoadMore();
+
         //申请权限
         RxPermissions getRxPermissions();
     }
 
-    interface Model extends IModel{
+    interface Model extends IModel {
         Observable<HotMovieBean> getHot(int start, boolean updata);
     }
 }
