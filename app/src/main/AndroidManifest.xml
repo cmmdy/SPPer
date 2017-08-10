@@ -39,28 +39,38 @@
             android:name="com.drop.spper.app.GlobalConfiguration"
             android:value="ConfigModule" />
 
-
-
-
-        <activity android:name=".mvp.ui.activity.MainActivity">
+        <activity android:name=".mvp.ui.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".mvp.ui.activity.PersonCenterActivity"
-            android:label="个人中心"/>
-        <activity android:name=".mvp.ui.activity.WalletActivity"
-            android:label="钱包"/>
-        <activity android:name=".mvp.ui.activity.MyFocusActivity"
-            android:label="我的关注"/>
-        <activity android:name=".mvp.ui.activity.AccountActivity"
-            android:label="账单明细"/>
-        <activity android:name=".mvp.ui.activity.SetVoiceActivity"
-            android:label="声音设置"/>
-        <activity android:name=".mvp.ui.activity.FeedBackActivity"
-            android:label="意见反馈"/>
+        <activity
+            android:name=".mvp.ui.activity.PersonCenterActivity"
+            android:label="个人中心" />
+        <activity
+            android:name=".mvp.ui.activity.WalletActivity"
+            android:label="钱包" />
+        <activity
+            android:name=".mvp.ui.activity.MyFocusActivity"
+            android:label="我的关注" />
+        <activity
+            android:name=".mvp.ui.activity.AccountActivity"
+            android:label="账单明细" />
+        <activity
+            android:name=".mvp.ui.activity.SetVoiceActivity"
+            android:label="声音设置" />
+        <activity
+            android:name=".mvp.ui.activity.FeedBackActivity"
+            android:label="意见反馈" />
+        <activity android:name=".mvp.ui.activity.MainActivity" />
+        <activity android:name=".mvp.ui.activity.ForgetPasswordActivity" />
+        <activity android:name=".mvp.ui.activity.RePasswordActivity" />
+        <activity android:name=".mvp.ui.activity.RegisterActivity" />
+        <activity android:name=".mvp.ui.activity.UpdataActivity" />
+        <activity android:name=".mvp.ui.activity.ContractActivity" />
+        <activity android:name=".mvp.ui.activity.EditResumeActivity"></activity>
     </application>
 
 </manifest>

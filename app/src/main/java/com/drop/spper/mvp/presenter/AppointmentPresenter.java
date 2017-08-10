@@ -5,8 +5,7 @@ import android.app.Application;
 import com.drop.spper.app.utils.RxUtils;
 import com.drop.spper.mvp.contract.AppointmentContract;
 import com.drop.spper.mvp.model.entity.HotMovieBean;
-import com.drop.spper.mvp.ui.adapter.AdapterOne;
-import com.drop.spper.mvp.ui.adapter.AdapterTwo;
+import com.drop.spper.mvp.ui.adapter.AdapterAppointment;
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.di.scope.FragmentScope;
 import com.jess.arms.integration.AppManager;
@@ -50,7 +49,7 @@ public class AppointmentPresenter extends BasePresenter<AppointmentContract.Mode
     public void requestAppointment(boolean pullToRefresh){
 
         if(mAdapter == null){
-            mAdapter = new AdapterTwo(subjectsBeens);
+            mAdapter = new AdapterAppointment(subjectsBeens);
             mRootView.setAdapter(mAdapter);
         }
 

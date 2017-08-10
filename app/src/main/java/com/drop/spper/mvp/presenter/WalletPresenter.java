@@ -5,13 +5,11 @@ import android.app.Application;
 import com.drop.spper.app.utils.RxUtils;
 import com.drop.spper.mvp.contract.WalletContract;
 import com.drop.spper.mvp.model.entity.HotMovieBean;
-import com.drop.spper.mvp.ui.adapter.AdapterOne;
-import com.drop.spper.mvp.ui.adapter.AdapterThree;
+import com.drop.spper.mvp.ui.adapter.AdapterWallet;
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.mvp.BasePresenter;
-import com.jess.arms.utils.PermissionUtil;
 import com.jess.arms.widget.imageloader.ImageLoader;
 
 import java.util.ArrayList;
@@ -65,7 +63,7 @@ public class WalletPresenter extends BasePresenter<WalletContract.Model, WalletC
 
     public void requestWallet(boolean pullToRefresh) {
         if (mAdapter == null) {
-            mAdapter = new AdapterThree(subjectsBeens);
+            mAdapter = new AdapterWallet(subjectsBeens);
             mRootView.setAdapter(mAdapter);
         }
 

@@ -29,6 +29,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
@@ -83,7 +84,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void launchActivity(Intent intent) {
-
+        UiUtils.startActivity(intent);
     }
 
     @Override
@@ -175,5 +176,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 toolbarTitle.setText("约拍");
                 break;
         }
+    }
+
+
+    @OnClick(R.id.my)
+    public void onViewClicked() {
+        launchActivity(new Intent(MainActivity.this, PersonCenterActivity.class));
     }
 }

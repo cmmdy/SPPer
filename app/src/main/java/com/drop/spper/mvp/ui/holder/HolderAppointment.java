@@ -1,15 +1,11 @@
 package com.drop.spper.mvp.ui.holder;
 
-import android.app.Activity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.drop.spper.R;
 import com.drop.spper.mvp.model.entity.HotMovieBean;
-import com.drop.spper.mvp.ui.activity.MyFocusActivity;
-import com.drop.spper.mvp.ui.adapter.AdapterFive;
 import com.jess.arms.base.App;
 import com.jess.arms.base.BaseHolder;
 import com.jess.arms.di.component.AppComponent;
@@ -18,16 +14,13 @@ import com.jess.arms.widget.imageloader.glide.GlideImageConfig;
 
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import io.reactivex.Observable;
 
-import static android.R.attr.data;
-
 /**
- * Created by Drop on 2017/5/21.
+ * Created by Drop on 2017/5/16.
  */
 
-public class HolderFive extends BaseHolder<HotMovieBean.SubjectsBean> {
+public class HolderAppointment extends BaseHolder<HotMovieBean.SubjectsBean> {
 
     @BindView(R.id.iv)
     ImageView iv;
@@ -35,21 +28,14 @@ public class HolderFive extends BaseHolder<HotMovieBean.SubjectsBean> {
     TextView name;
     @BindView(R.id.phone)
     TextView phone;
-    @BindView(R.id.subscribe)
-    LinearLayout subscribe;
 
     private AppComponent mAppComponent;
     private ImageLoader mImageLoader;
-    private MyFocusActivity currentActivity;
-    private AdapterFive mAdapterFive;
 
-
-    public HolderFive(View itemView, AdapterFive adapterFive) {
+    public HolderAppointment(View itemView) {
         super(itemView);
         mAppComponent = ((App) itemView.getContext().getApplicationContext()).getAppComponent();
         mImageLoader = mAppComponent.imageLoader();
-        currentActivity = (MyFocusActivity) mAppComponent.appManager().getCurrentActivity();
-        mAdapterFive = adapterFive;
     }
 
     @Override
@@ -65,10 +51,12 @@ public class HolderFive extends BaseHolder<HotMovieBean.SubjectsBean> {
                 .subscribe(s -> name.setText(s));
         Observable.just(data.getCasts().get(0).getId())
                 .subscribe(s -> phone.setText(s));
-        subscribe.setOnClickListener(v ->
-                mAdapterFive.notifyItemRemoved(getAdapterPosition())
-        );
+    }
 
+    @Override
+    protected void onRelease() {
+        mImageLoader.clear(mAppComponent.application(), GlideImageConfig.builder()
+                .imageViews(iv)
+                .build());
     }
 }
-

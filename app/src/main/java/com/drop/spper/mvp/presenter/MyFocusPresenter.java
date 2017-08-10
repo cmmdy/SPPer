@@ -5,8 +5,7 @@ import android.app.Application;
 import com.drop.spper.app.utils.RxUtils;
 import com.drop.spper.mvp.contract.MyFocusContract;
 import com.drop.spper.mvp.model.entity.HotMovieBean;
-import com.drop.spper.mvp.ui.adapter.AdapterFive;
-import com.drop.spper.mvp.ui.adapter.AdapterFour;
+import com.drop.spper.mvp.ui.adapter.AdapterFocus;
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
@@ -64,7 +63,7 @@ public class MyFocusPresenter extends BasePresenter<MyFocusContract.Model, MyFoc
 
     public void requestMyFocus(boolean pullToRefresh) {
         if (mAdapter == null) {
-            mAdapter = new AdapterFive(subjectsBeens);
+            mAdapter = new AdapterFocus(subjectsBeens);
             mRootView.setAdapter(mAdapter);
         }
 

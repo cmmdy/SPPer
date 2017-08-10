@@ -16,7 +16,7 @@ import static com.drop.spper.R.id.photographer;
  * Created by Drop on 2017/5/19.
  */
 
-public class HolderThree extends BaseHolder<HotMovieBean.SubjectsBean> {
+public class HolderWallet extends BaseHolder<HotMovieBean.SubjectsBean> {
 
     @BindView(R.id.textView3)
     TextView date;
@@ -25,7 +25,7 @@ public class HolderThree extends BaseHolder<HotMovieBean.SubjectsBean> {
     @BindView(R.id.money_number)
     TextView moneyNumber;
 
-    public HolderThree(View itemView) {
+    public HolderWallet(View itemView) {
         super(itemView);
     }
 

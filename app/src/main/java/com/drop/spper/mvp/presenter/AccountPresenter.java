@@ -5,8 +5,7 @@ import android.app.Application;
 import com.drop.spper.app.utils.RxUtils;
 import com.drop.spper.mvp.contract.AccountContract;
 import com.drop.spper.mvp.model.entity.HotMovieBean;
-import com.drop.spper.mvp.ui.adapter.AdapterFour;
-import com.drop.spper.mvp.ui.adapter.AdapterThree;
+import com.drop.spper.mvp.ui.adapter.AdapterAccount;
 import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.di.scope.ActivityScope;
@@ -64,7 +63,7 @@ public class AccountPresenter extends BasePresenter<AccountContract.Model, Accou
 
     public void requestAccount(boolean pullToRefresh) {
         if (mAdapter == null) {
-            mAdapter = new AdapterFour(subjectsBeens);
+            mAdapter = new AdapterAccount(subjectsBeens);
             mRootView.setAdapter(mAdapter);
         }
 

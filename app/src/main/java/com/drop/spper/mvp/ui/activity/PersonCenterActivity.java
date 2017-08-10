@@ -100,10 +100,13 @@ public class PersonCenterActivity extends BaseActivity<PersonCenterPresenter> im
                 launchActivity(new Intent(this, FeedBackActivity.class));
                 break;
             case R.id.pupdate:
+                launchActivity(new Intent(this, UpdataActivity.class));
                 break;
             case R.id.pcontactus:
+                launchActivity(new Intent(this, ContractActivity.class));
                 break;
             case R.id.backll:
+                finish();
                 break;
         }
     }
