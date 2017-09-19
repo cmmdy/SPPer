@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="rxerrorhandler-2.0.2">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.android/build-cache/20d11a5155397b0ad0143766af8bc892d8eefe88/output/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.android/build-cache/20d11a5155397b0ad0143766af8bc892d8eefe88/output/res" />
+      <root url="file://$USER_HOME$/.android/build-cache/87c5787f871e0c6c69cf7c236a40775a1d414deb/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/87c5787f871e0c6c69cf7c236a40775a1d414deb/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

@@ -25,7 +25,6 @@ public class WorkDetailsActivity extends BaseActivity<WorkDetailsPresenter> impl
 
     @BindView(R.id.expand_text_view)
     ExpandableTextView expandTextView;
-
     @Override
     public void setupActivityComponent(AppComponent appComponent) {
         DaggerWorkDetailsComponent //如找不到该类,请编译一下项目
