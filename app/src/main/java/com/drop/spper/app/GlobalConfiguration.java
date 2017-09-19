@@ -20,14 +20,18 @@ import android.widget.TextView;
 import com.drop.spper.BuildConfig;
 import com.drop.spper.R;
 import com.drop.spper.mvp.model.api.Api;
+import com.drop.spper.mvp.model.api.cache.CommonCache;
+import com.drop.spper.mvp.model.api.service.CommonService;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;
 import com.jess.arms.base.App;
+import com.jess.arms.base.delegate.AppDelegate;
 import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.http.GlobalHttpHandler;
 import com.jess.arms.http.RequestInterceptor;
 import com.jess.arms.integration.ConfigModule;
+import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.utils.UiUtils;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
@@ -55,6 +59,8 @@ import timber.log.Timber;
  */
 public final class GlobalConfiguration implements ConfigModule {
 //    public static String sDomain = Api.APP_DOMAIN;
+
+    //    public static String sDomain = Api.APP_DOMAIN;
 
     @Override
     public void applyOptions(Context context, GlobalConfigModule.Builder builder) {
@@ -198,31 +204,17 @@ public final class GlobalConfiguration implements ConfigModule {
             public void onActivityStarted(Activity activity) {
                 Timber.w(activity + " - onActivityStarted");
                 if (!activity.getIntent().getBooleanExtra("isInitToolbar", false)) {
-
-//              实现全透明状态栏
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    Window window = activity.getWindow();
-                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-                    );
-                    window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-
-                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                    window.setStatusBarColor(Color.TRANSPARENT);
-                }
-
-
                     //由于加强框架的兼容性,故将 setContentView 放到 onActivityCreated 之后,onActivityStarted 之前执行
                     //而 findViewById 必须在 Activity setContentView() 后才有效,所以将以下代码从之前的 onActivityCreated 中移动到 onActivityStarted 中执行
                     activity.getIntent().putExtra("isInitToolbar", true);
                     //这里全局给Activity设置toolbar和title,你想象力有多丰富,这里就有多强大,以前放到BaseActivity的操作都可以放到这里
-                    if (activity.findViewById(R.id.mytoolbar) != null) {
+                    if (activity.findViewById(R.id.toolbar) != null) {
                         if (activity instanceof AppCompatActivity) {
-                            ((AppCompatActivity) activity).setSupportActionBar((Toolbar) activity.findViewById(R.id.mytoolbar));
+                            ((AppCompatActivity) activity).setSupportActionBar((Toolbar) activity.findViewById(R.id.toolbar));
                             ((AppCompatActivity) activity).getSupportActionBar().setDisplayShowTitleEnabled(false);
                         } else {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                activity.setActionBar((android.widget.Toolbar) activity.findViewById(R.id.mytoolbar));
+                                activity.setActionBar((android.widget.Toolbar) activity.findViewById(R.id.toolbar));
                                 activity.getActionBar().setDisplayShowTitleEnabled(false);
                             }
                         }
@@ -309,3 +301,5 @@ public final class GlobalConfiguration implements ConfigModule {
     }
 
 }
+
+

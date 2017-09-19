@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rr1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circleImageView"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/title"
+            android:layout_marginStart="9dp"
+            android:src="@drawable/head" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="11dp"
+            android:layout_toEndOf="@+id/circleImageView"
+            android:text="A馒头"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/title"
+            android:layout_below="@id/text"
+            android:layout_marginTop="20px"
+            android:text="5月31日 17:04"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/title"
+            android:layout_below="@+id/title"
+            android:layout_marginEnd="50px"
+            android:layout_marginTop="30px"
+            android:gravity="start"
+            android:text="Located two hours south of Sydney in the Southern Highland of New South Wales,..."
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/text"
+            android:layout_alignTop="@+id/time"
+            android:text="2"
+            android:textColor="#dbdbdb"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/like"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/like"
+            android:layout_alignTop="@+id/count"
+            android:layout_toStartOf="@+id/count"
+            android:layout_marginEnd="8dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -79,4 +79,13 @@ dependencies {
 
     compile 'com.ashokvarma.android:bottom-navigation-bar:1.4.1'
     compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile project(path: ':ZBLibrary')
+
+
+    //图片选择器
+    compile 'cn.bingoogolapple:bga-adapter:1.1.5@aar'
+    compile 'cn.bingoogolapple:bga-photopicker:1.2.3@aar'
+
+    //可扩展textview
+    compile 'com.ms-square:expandableTextView:0.1.4'
 }

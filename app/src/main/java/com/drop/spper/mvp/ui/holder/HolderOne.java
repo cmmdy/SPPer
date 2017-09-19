@@ -1,11 +1,13 @@
 package com.drop.spper.mvp.ui.holder;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.drop.spper.R;
 import com.drop.spper.mvp.model.entity.HotMovieBean;
+import com.drop.spper.mvp.ui.activity.WorkDetailsActivity;
 import com.jess.arms.base.App;
 import com.jess.arms.base.BaseHolder;
 import com.jess.arms.di.component.AppComponent;
@@ -59,6 +61,13 @@ public class HolderOne extends BaseHolder<HotMovieBean.SubjectsBean> {
                         .url(data.getCasts().get(0).getAvatars().getMedium())
                         .imageView(circleImageView)
                         .build());
+        ivAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mAppComponent.appManager().getCurrentActivity(), WorkDetailsActivity.class);
+                mAppComponent.appManager().getCurrentActivity().startActivity(i);
+            }
+        });
     }
 
     @Override

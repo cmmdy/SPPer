@@ -70,7 +70,9 @@
         <activity android:name=".mvp.ui.activity.RegisterActivity" />
         <activity android:name=".mvp.ui.activity.UpdataActivity" />
         <activity android:name=".mvp.ui.activity.ContractActivity" />
-        <activity android:name=".mvp.ui.activity.EditResumeActivity"></activity>
+        <activity android:name=".mvp.ui.activity.EditResumeActivity" />
+        <activity android:name=".mvp.ui.activity.UploadActivity" />
+        <activity android:name=".mvp.ui.activity.WorkDetailsActivity"></activity>
     </application>
 
 </manifest>
